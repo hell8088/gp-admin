@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/main.html}">
+<body layout:fragment="content">
+	<div class="row">
+		<div class="col-xs-12">
+
+			<h3 class="header smaller lighter blue">用户新增</h3>
+			<!-- 编辑区 start -->
+			<form class="form-horizontal" role="form" action="#"
+				th:action="@{/user/editUser}" method="post">
+
+				<input type="hidden" name="id" th:value="${id}" />
+				<input type="hidden" name="operType" id="operType" th:value="${operType}" />
+
+				<div class="form-group">
+					<label class="col-sm-3 control-label no-padding-right"
+						for="form-field-1"> 用户名 </label>
+					<div class="col-sm-9">
+						<input type="text" id="form-field-1" placeholder="Username"
+							class="col-xs-10 col-sm-5" name="userName" th:value="${userName}" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-sm-3 control-label no-padding-right"
+						for="form-field-2"> 密码 </label>
+
+					<div class="col-sm-9">
+						<input type="password" id="form-field-2" placeholder="password"
+							class="col-xs-10 col-sm-5" name="password" th:value="${password}" />
+					</div>
+				</div>
+
+				<div class="clearfix">
+					<div class="col-md-offset-3 col-md-9">
+						<button class="btn btn-info" type="submit">
+							<i class="ace-icon fa fa-check bigger-110"></i> 提 交
+						</button>
+						&nbsp; &nbsp; &nbsp; <a class="btn" type="reset"
+							th:href="@{/user/list}"> <i
+							class="ace-icon fa fa-undo bigger-110"></i> 返 回
+						</a>
+					</div>
+				</div>
+				<div class="col-md-offset-3 col-md-9">
+					<div class="text-warning bigger-110 orange" th:style="'display:'+@{(${errMsg}=='noErr'?'none':'inline-block')}+''">
+						<i class="ace-icon fa fa-exclamation-triangle"></i> [[${errMsg}]]
+					</div>
+				</div>
+			</form>
+			<!-- 编辑区 end -->
+		</div>
+	</div>
+</body>
+</html>

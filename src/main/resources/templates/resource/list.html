@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/main.html}">
+<body layout:fragment="content">
+	<div class="row">
+		<div class="col-xs-12">
+
+			<h3 class="header smaller lighter blue">资源列表</h3>
+
+			<!-- 表格 start -->
+			<div class="row">
+				<div class="col-sm-2">
+					<div class="widget-box widget-color-blue2">
+						<div class="widget-header">
+							<h4 class="widget-title lighter smaller">资源列表</h4>
+						</div>
+
+						<div class="widget-body" style="min-height: 600px;">
+							<div class="form-horizontal" style="padding-top: 10px;">
+								<ul id="resourceTree" class="ztree"></ul>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-sm-8">
+					<div class="widget-box widget-color-green2">
+						<div class="widget-header">
+							<h4 class="widget-title lighter smaller">
+								节点信息<span class="smaller-80"></span>
+							</h4>
+						</div>
+
+						<input type="hidden" id="resId" value="" /> <input type="hidden"
+							id="resTreeid" value="" />
+
+						<div class="widget-body" style="min-height: 600px;">
+							<div class="form-horizontal" style="padding-top: 10px;">
+
+								<div class="form-group">
+									<label class="col-sm-2 control-label no-padding-right"
+										for="form-field-1"> 资源名称 </label>
+
+									<div class="col-sm-8">
+										<input id="resName" type="text" placeholder="name"
+											class="col-xs-10 col-sm-5">
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label class="col-sm-2 control-label no-padding-right"
+										for="form-field-1"> 资源描述 </label>
+
+									<div class="col-sm-8">
+										<input id="resDesc" type="text" class="col-xs-10 col-sm-5">
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label class="col-sm-2 control-label no-padding-right"
+										for="form-field-1"> 资源代码 </label>
+
+									<div class="col-sm-8">
+										<input id="resCode" type="text" class="col-xs-10 col-sm-5">
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label class="col-sm-2 control-label no-padding-right"
+										for="form-field-1"> 资源类型 </label>
+
+									<div class="col-sm-8">
+										<input id="resType" type="text" class="col-xs-10 col-sm-5">
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label class="col-sm-2 control-label no-padding-right"
+										for="form-field-1"> 资源地址 </label>
+
+									<div class="col-sm-8">
+										<textarea class="form-control" id="resUrl" placeholder="url"></textarea>
+									</div>
+								</div>
+
+								<div class="clearfix">
+									<div class="col-md-offset-2 col-md-9">
+										<button class="btn btn-info" onclick="saveNodeInfo()">
+											<i class="ace-icon fa fa-check bigger-110"></i> 保 存
+										</button>
+										&nbsp; &nbsp; &nbsp; <a class="btn" type="reset"
+											th:href="@{/user/list}"> <i
+											class="ace-icon fa fa-undo bigger-110"></i> 返 回
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- 表格 end -->
+
+		</div>
+	</div>
+
+	<!-- page specific plugin scripts -->
+	<script th:src="@{/assets/ztree/js/jquery.ztree.core.min.js}"></script>
+	<script th:src="@{/assets/ztree/js/jquery.ztree.excheck.min.js}"></script>
+	<script th:src="@{/assets/ztree/js/jquery.ztree.exedit.min.js}"></script>
+
+	<SCRIPT type="text/javascript">
+		/* ---------- ztree start ---------- */
+		var treeNodes = [ {
+			"id" : 1,
+			"pId" : 0,
+			"name" : "系统管理",
+			"click" : "editNode(this)"
+		} ];
+
+		//ztree 初始化属性设置
+		var setting = {
+			//树视图
+			view : {
+				expandSpeed : "",
+				addHoverDom : addHoverDom, //节点鼠标浮上事件
+				removeHoverDom : removeHoverDom, //鼠标离开节点事件
+				selectedMulti : false
+			},
+			edit : {
+				enable : true,
+				showRenameBtn : false
+			//隐藏节点编辑按钮
+			},
+			data : {
+				simpleData : {
+					enable : true,
+					idKey : "id",
+					pIdKey : "pId",
+					rootPId : 0
+				}
+			},
+			callback : {
+				beforeRemove : beforeRemove,
+				beforeRename : beforeRename
+			}
+		};
+
+		function filter(treeId, parentNode, childNodes) {
+			if (!childNodes)
+				return null;
+			for (var i = 0, l = childNodes.length; i < l; i++) {
+				childNodes[i].name = childNodes[i].name.replace(/\.n/g, '.');
+			}
+			return childNodes;
+		}
+		function beforeRemove(treeId, treeNode) {
+			var zTree = $.fn.zTree.getZTreeObj("resourceTree");
+			zTree.selectNode(treeNode);
+			if (confirm("确认删除 节点 -- " + treeNode.name + " 吗？")) {
+				removeNode(treeNode.id);
+				return true;
+			} else {
+				alert("不删除节点");
+				return false;
+			}
+		}
+		function beforeRename(treeId, treeNode, newName) {
+			if (newName.length == 0) {
+				setTimeout(function() {
+					var zTree = $.fn.zTree.getZTreeObj("resourceTree");
+					zTree.cancelEditName();
+					alert("节点名称不能为空.");
+				}, 0);
+				return false;
+			}
+			return true;
+		}
+
+		var newCount = 1;
+		function addHoverDom(treeId, treeNode) {
+			var sObj = $("#" + treeNode.tId + "_span");
+			if (treeNode.editNameFlag
+					|| $("#addBtn_" + treeNode.tId).length > 0)
+				return;
+			var addStr = "<span class='button add' id='addBtn_" + treeNode.tId
+					+ "' title='add node' onfocus='this.blur();'></span>";
+			sObj.after(addStr);
+			var btn = $("#addBtn_" + treeNode.tId);
+			if (btn)
+				btn.bind("click", function() {
+					var zTree = $.fn.zTree.getZTreeObj("resourceTree");
+					var treeName = "new node" + (newCount++);
+
+					//调用 ajax 增加一个node
+					params = {
+						name : treeName,
+						pid : treeNode.id
+					};
+					$.ajax({
+						type : "post",
+						data : params,
+						url : "/resource/addNode",
+						success : function(data) {
+							var rid = data;
+							//修改页面端输结构
+							zTree.addNodes(treeNode, {
+								id : rid,
+								pId : treeNode.id,
+								name : treeName,
+								click : "editNode(this.id," + rid + ")"
+							});
+						}
+					});
+					return false;
+				});
+		};
+		function removeHoverDom(treeId, treeNode) {
+			$("#addBtn_" + treeNode.tId).unbind().remove();
+		};
+
+		/* ---------- ajax action ---------- */
+
+		//初始化tree
+		function loadTreeNodes() {
+			params = {
+				pid : 0
+			};
+			$.ajax({
+				type : "post",
+				data : params,
+				url : "/resource/loadTree",
+				success : function(data) {
+					treeNodes = data;
+					$.fn.zTree.init($("#resourceTree"), setting, treeNodes);
+				}
+			});
+		}
+
+		//编辑节点属性
+		function editNode(treeId, rid) {
+			params = {
+				resId : rid
+			};
+			$.ajax({
+				type : "post",
+				data : params,
+				url : "/resource/getNode",
+				success : function(data) {
+					//alert(data);
+					bindNodeInfo(data,treeId);
+				}
+			});
+		}
+		function bindNodeInfo(node,treeId) {
+			$("#resTreeid").val(treeId);
+			$("#resId").val(node.id);
+			$("#resName").val(node.name);
+			$("#resDesc").val(node.resDesc);
+			$("#resCode").val(node.resCode);
+			$("#resType").val(node.resType);
+			$("#resUrl").val(node.resAddress);
+		}
+		function saveNodeInfo() {
+			//alert("saveNodeInfo");
+			var resId = $("#resId").val();
+			var resName = $("#resName").val();
+			var resDesc = $("#resDesc").val();
+			var resCode = $("#resCode").val();
+			var resType = $("#resType").val();
+			var resUrl = $("#resUrl").val();
+			var treeId =  $("#resTreeid").val();
+
+			params = {
+				id : resId,
+				name : resName,
+				resDesc : resDesc,
+				resCode : resCode,
+				resType : resType,
+				resAddress : resUrl
+			};
+			$.ajax({
+				type : "post",
+				data : params,
+				url : "/resource/updateNode",
+				success : function(data) {
+					var zTree = $.fn.zTree.getZTreeObj("resourceTree");
+					var tree_span = treeId.replace("_a","_span");
+					$("#"+tree_span).text(resName);
+				}
+			});
+		}
+		
+		function removeNode(rid) {
+			params = {
+				id : rid
+			};
+			$.ajax({
+				type : "post",
+				data : params,
+				url : "/resource/removeNode",
+				success : function(data) {
+				}
+			});
+		}
+
+		//全局load，静态初始化时提取 $.fn 行到 ready 方法即可
+		$(document).ready(function() {
+			//$.fn.zTree.init($("#resourceTree"), setting, treeNodes);
+			loadTreeNodes();
+		});
+	</SCRIPT>
+</body>
+</html>

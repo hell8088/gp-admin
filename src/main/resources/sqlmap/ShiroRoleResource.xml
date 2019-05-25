@@ -1,0 +1,172 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--
+模块说明：
+-->
+<mapper namespace="com.gp.admin.permission.dao.ShiroRoleResourceDao">
+    <sql id="tableName">shiro_role_resource</sql>
+    <!--
+    功能说明：通用全字段查询
+    -->
+    <sql id="commonColumns">id, creater, modifier, created_date AS createdDate, modified_date AS modifiedDate, deleted, res_id AS resId, role_id AS roleId</sql>
+    <sql id="mapCondition">
+        <where>
+            <if test="id != null">AND id = #{id}</if>
+            <if test="idGt != null">AND id &gt; #{idGt}</if>
+            <if test="idLt != null">AND id &lt; #{idLt}</if>
+            <if test="idGe != null">AND id &gt;= #{idGe}</if>
+            <if test="idLe != null">AND id &lt;= #{idLe}</if>
+            <if test="idNe != null">AND id &lt;&gt; #{idNe}</if>
+            <if test="idIsNull != null">AND id IS NULL</if>
+            <if test="idIsNotNull != null">AND .id IS NOT NULL</if>
+            <if test="creater != null">AND creater = #{creater}</if>
+            <if test="createrGt != null">AND creater &gt; #{createrGt}</if>
+            <if test="createrLt != null">AND creater &lt; #{createrLt}</if>
+            <if test="createrGe != null">AND creater &gt;= #{createrGe}</if>
+            <if test="createrLe != null">AND creater &lt;= #{createrLe}</if>
+            <if test="createrNe != null">AND creater &lt;&gt; #{createrNe}</if>
+            <if test="createrIsNull != null">AND creater IS NULL</if>
+            <if test="createrIsNotNull != null">AND .creater IS NOT NULL</if>
+            <if test="createrLike != null and createrLike !=''">AND creater like #{createrLike}</if>
+            <if test="modifier != null">AND modifier = #{modifier}</if>
+            <if test="modifierGt != null">AND modifier &gt; #{modifierGt}</if>
+            <if test="modifierLt != null">AND modifier &lt; #{modifierLt}</if>
+            <if test="modifierGe != null">AND modifier &gt;= #{modifierGe}</if>
+            <if test="modifierLe != null">AND modifier &lt;= #{modifierLe}</if>
+            <if test="modifierNe != null">AND modifier &lt;&gt; #{modifierNe}</if>
+            <if test="modifierIsNull != null">AND modifier IS NULL</if>
+            <if test="modifierIsNotNull != null">AND .modifier IS NOT NULL</if>
+            <if test="modifierLike != null and modifierLike !=''">AND modifier like #{modifierLike}</if>
+            <if test="createdDate != null">AND created_date = #{createdDate}</if>
+            <if test="createdDateGt != null">AND created_date &gt; #{createdDateGt}</if>
+            <if test="createdDateLt != null">AND created_date &lt; #{createdDateLt}</if>
+            <if test="createdDateGe != null">AND created_date &gt;= #{createdDateGe}</if>
+            <if test="createdDateLe != null">AND created_date &lt;= #{createdDateLe}</if>
+            <if test="createdDateNe != null">AND created_date &lt;&gt; #{createdDateNe}</if>
+            <if test="createdDateIsNull != null">AND created_date IS NULL</if>
+            <if test="createdDateIsNotNull != null">AND .created_date IS NOT NULL</if>
+            <if test="modifiedDate != null">AND modified_date = #{modifiedDate}</if>
+            <if test="modifiedDateGt != null">AND modified_date &gt; #{modifiedDateGt}</if>
+            <if test="modifiedDateLt != null">AND modified_date &lt; #{modifiedDateLt}</if>
+            <if test="modifiedDateGe != null">AND modified_date &gt;= #{modifiedDateGe}</if>
+            <if test="modifiedDateLe != null">AND modified_date &lt;= #{modifiedDateLe}</if>
+            <if test="modifiedDateNe != null">AND modified_date &lt;&gt; #{modifiedDateNe}</if>
+            <if test="modifiedDateIsNull != null">AND modified_date IS NULL</if>
+            <if test="modifiedDateIsNotNull != null">AND .modified_date IS NOT NULL</if>
+            <if test="deleted != null">AND deleted = #{deleted}</if>
+            <if test="deletedGt != null">AND deleted &gt; #{deletedGt}</if>
+            <if test="deletedLt != null">AND deleted &lt; #{deletedLt}</if>
+            <if test="deletedGe != null">AND deleted &gt;= #{deletedGe}</if>
+            <if test="deletedLe != null">AND deleted &lt;= #{deletedLe}</if>
+            <if test="deletedNe != null">AND deleted &lt;&gt; #{deletedNe}</if>
+            <if test="deletedIsNull != null">AND deleted IS NULL</if>
+            <if test="deletedIsNotNull != null">AND .deleted IS NOT NULL</if>
+            <if test="resId != null">AND res_id = #{resId}</if>
+            <if test="resIdGt != null">AND res_id &gt; #{resIdGt}</if>
+            <if test="resIdLt != null">AND res_id &lt; #{resIdLt}</if>
+            <if test="resIdGe != null">AND res_id &gt;= #{resIdGe}</if>
+            <if test="resIdLe != null">AND res_id &lt;= #{resIdLe}</if>
+            <if test="resIdNe != null">AND res_id &lt;&gt; #{resIdNe}</if>
+            <if test="resIdIsNull != null">AND res_id IS NULL</if>
+            <if test="resIdIsNotNull != null">AND .res_id IS NOT NULL</if>
+            <if test="roleId != null">AND role_id = #{roleId}</if>
+            <if test="roleIdGt != null">AND role_id &gt; #{roleIdGt}</if>
+            <if test="roleIdLt != null">AND role_id &lt; #{roleIdLt}</if>
+            <if test="roleIdGe != null">AND role_id &gt;= #{roleIdGe}</if>
+            <if test="roleIdLe != null">AND role_id &lt;= #{roleIdLe}</if>
+            <if test="roleIdNe != null">AND role_id &lt;&gt; #{roleIdNe}</if>
+            <if test="roleIdIsNull != null">AND role_id IS NULL</if>
+            <if test="roleIdIsNotNull != null">AND .role_id IS NOT NULL</if> AND deleted = 0
+        </where>
+    </sql>
+    <!--
+    功能说明：插入数据，如果实体的属性值为空则不处理
+    -->
+    <insert id="insert" parameterType="Map">INSERT INTO 
+        <include refid="tableName"></include>
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="model.creater != null">creater,</if>
+            <if test="model.modifier != null">modifier,</if>
+            <if test="model.createdDate != null">created_date,</if>
+            <if test="model.modifiedDate != null">modified_date,</if>
+            <if test="model.deleted != null">deleted,</if>
+            <if test="model.resId != null">res_id,</if>
+            <if test="model.roleId != null">role_id</if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            <if test="model.creater != null">#{model.creater},</if>
+            <if test="model.modifier != null">#{model.modifier},</if>
+            <if test="model.createdDate != null">#{model.createdDate},</if>
+            <if test="model.modifiedDate != null">#{model.modifiedDate},</if>
+            <if test="model.deleted != null">#{model.deleted},</if>
+            <if test="model.resId != null">#{model.resId},</if>
+            <if test="model.roleId != null">#{model.roleId}</if>
+        </trim>
+    </insert>
+    <!--
+    功能说明：插入数据，如果实体的属性值为空则不处理
+    -->
+    <insert id="batchInsert">INSERT INTO 
+        <include refid="tableName"></include>
+        <trim prefix="(" suffix=")" suffixOverrides=",">creater,modifier,created_date,modified_date,deleted,res_id,role_id</trim>
+        <foreach open="VALUES" collection="models" item="model" separator=",">(#{model.creater},#{model.modifier},#{model.createdDate},#{model.modifiedDate},#{model.deleted},#{model.resId},#{model.roleId})</foreach>
+    </insert>
+    <!--
+    功能说明：更新数据，如果实体的属性值为空则不处理
+    -->
+    <update id="update" parameterType="Map">UPDATE 
+        <include refid="tableName"></include>
+        <set>
+            <if test="model.creater != null">creater = #{model.creater},</if>
+            <if test="model.modifier != null">modifier = #{model.modifier},</if>
+            <if test="model.createdDate != null">created_date = #{model.createdDate},</if>
+            <if test="model.modifiedDate != null">modified_date = #{model.modifiedDate},</if>
+            <if test="model.deleted != null">deleted = #{model.deleted},</if>
+            <if test="model.resId != null">res_id = #{model.resId},</if>
+            <if test="model.roleId != null">role_id = #{model.roleId}</if>
+        </set>WHERE id = #{model.id} AND deleted = 0
+    </update>
+    <!--
+    功能说明：插入数据，对属性值是否为空不敏感
+    -->
+    <update id="fullUpdate" parameterType="Map">UPDATE 
+        <include refid="tableName"></include> SET creater = #{model.creater},modifier = #{model.modifier},created_date = #{model.createdDate},modified_date = #{model.modifiedDate},deleted = #{model.deleted},res_id = #{model.resId},role_id = #{model.roleId} WHERE id = #{model.id} AND deleted = 0
+    </update>
+    <!--
+    功能说明：删除数据
+    -->
+    <delete id="delete" parameterType="Map">UPDATE 
+        <include refid="tableName"></include> SET deleted = 1 
+        <include refid="mapCondition"></include>
+    </delete>
+    <!--
+    功能说明：根据主键删除数据
+    -->
+    <delete id="deleteByPrimaryKey">UPDATE 
+        <include refid="tableName"></include> SET deleted = 1 WHERE id = #{id}
+    </delete>
+    <!--
+    功能说明：数据查询
+    -->
+    <select id="find" parameterType="Map" resultType="com.gp.admin.permission.domain.ShiroRoleResource">SELECT
+        <include refid="commonColumns"></include>FROM 
+        <include refid="tableName"></include>
+        <include refid="mapCondition"></include>
+        <if test="orderByString != null and orderByString != ''">ORDER BY ${orderByString}</if>
+        <if test="rowBounds != null">limit ${rowBounds.offset},${rowBounds.limit}</if>
+    </select>
+    <!--
+    功能说明：数据查询中有分页时查询总记录数
+    -->
+    <select id="findCount" parameterType="Map" resultType="Long">SELECT COUNT(1) FROM 
+        <include refid="tableName"></include>
+        <include refid="mapCondition"></include>
+    </select>
+    <!--
+    功能说明：根据主键查询
+    -->
+    <select id="findByPrimaryKey" parameterType="Map" resultType="com.gp.admin.permission.domain.ShiroRoleResource">SELECT
+        <include refid="commonColumns"></include>FROM 
+        <include refid="tableName"></include> WHERE id = #{id} AND deleted = 0
+    </select>
+</mapper>

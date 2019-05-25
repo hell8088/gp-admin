@@ -1,0 +1,64 @@
+			<ul id="main-leftmenu" class="nav nav-list">
+			
+				<li class="">
+					<a href="#"> 
+						<i class="menu-icon fa fa-tachometer"></i> 
+						<span class="menu-text"> Dashboard </span>
+					</a> 
+					<b class="arrow"></b>
+				</li>
+
+				<li class="">
+					<a href="#" class="dropdown-toggle"> 
+						<i class="menu-icon fa fa-desktop"></i> 
+						<span class="menu-text"> UI &amp; Elements </span> 
+						<b class="arrow fa fa-angle-down"></b>
+					</a> 
+					<b class="arrow"></b>
+
+					<ul class="submenu">
+						<li class="">
+							<a href="#" class="dropdown-toggle"> 
+								<i class="menu-icon fa fa-caret-right"></i><span class="menu-text"> Layouts </span>  
+								<b class="arrow fa fa-angle-down"></b>
+							</a> 
+							<b class="arrow"></b>
+							
+							<ul class="submenu">
+								<li class="">
+									<a href="/user/list"> 
+										<i class="menu-icon fa fa-caret-right"></i><span class="menu-text"> Top Menu </span>   
+									</a> 
+									<b class="arrow"></b>
+								</li>
+
+								<li class="">
+									<a href="two-menu-1.html"> 
+										<i class="menu-icon fa fa-caret-right"></i><span class="menu-text"> Two Menus 1 </span>   
+									</a> 
+									<b class="arrow"></b>
+								</li>
+							</ul>
+						</li>
+						<li class="">
+							<a href="typography.html"> 
+								<i class="menu-icon fa fa-caret-right"></i> Typography
+							</a> 
+							<b class="arrow"></b>
+						</li>
+						<li class="">
+							<a href="elements.html"> 
+								<i class="menu-icon fa fa-caret-right"></i> Elements
+							</a> 
+							<b class="arrow"></b>
+						</li>
+					</ul>
+				</li>
+				<li class="">
+					<a href="#"> 
+						<i class="menu-icon fa fa-tachometer"></i> 
+						<span class="menu-text"> 王界涵自定义 </span>
+					</a> 
+					<b class="arrow"></b>
+				</li>
+			</ul>
