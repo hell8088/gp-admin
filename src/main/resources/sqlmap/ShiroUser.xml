@@ -171,4 +171,15 @@
         <include refid="commonColumns"></include>FROM 
         <include refid="tableName"></include> WHERE id = #{id} AND deleted = 0
     </select>
+    
+    
+    <select id="findByPage" parameterType="Map" resultType="com.gp.admin.permission.domain.ShiroUser">
+    	SELECT
+        <include refid="commonColumns"></include>FROM 
+        <include refid="tableName"></include> 
+        WHERE id >= (SELECT id FROM 
+        <include refid="tableName"></include>
+        LIMIT #{offSet},1
+        ) LIMIT #{pageSize}
+    </select>
 </mapper>

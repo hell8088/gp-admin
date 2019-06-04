@@ -26,6 +26,7 @@ public class ShiroUserController {
 
 	private static final Logger logger = LoggerFactory.getLogger(ShiroUserController.class);
 	private static final String return_list = "user/list";
+	private static final String return_pagelist = "user/pagelist";
 	private static final String return_edit = "user/edit";
 	private static final String redirect_list = "redirect:list";
 	private static final String redirect_edit = "redirect:edit";
@@ -53,6 +54,26 @@ public class ShiroUserController {
 		ModelAndView mv = new ModelAndView(return_list);
 		mv.addObject("userList", users);
 		mv.addObject("menuId", menuId);
+		return mv;
+	}
+
+	@RequestMapping("/user/pagelist")
+	public ModelAndView pagelist(String menuId, Integer pageNum, Integer pageSize) {
+		if (pageNum == null || pageSize == null) {
+			pageNum = 1;
+			pageSize = 10;
+		}
+		long dataCount = 95;
+		long pageCount = dataCount / pageSize + 1;
+
+		List<ShiroUser> users = userService.findByPage(pageNum, pageSize);
+		ModelAndView mv = new ModelAndView(return_pagelist);
+		mv.addObject("userList", users);
+		mv.addObject("menuId", menuId);
+		mv.addObject("pageNum", pageNum);
+		mv.addObject("pageSize", pageSize);
+		mv.addObject("pageCount", pageCount);
+		mv.addObject("dataCount", dataCount);
 		return mv;
 	}
 

@@ -180,6 +180,25 @@ public class ShiroUserService {
 	}
 
 	/**
+	 * 
+	 * @param pageNum    页码
+	 * @param pageSize   条数
+	 * @param pageFilter 条件
+	 * @return
+	 */
+	public List<ShiroUser> findByPage(int pageNum, int pageSize) {
+		Map<String, Object> pageFilter = new HashMap<>();
+		int offSet = 1;
+		if (pageNum > 1) {
+			offSet = 1 + (pageNum - 1) * pageSize; // 分页,省略判断整形溢出
+		}
+		pageFilter.put("offSet", offSet);
+		pageFilter.put("pageSize", pageSize);
+		// pageFilter.put("orderByString", "created_date desc");
+		return dao.findByPage(pageFilter);
+	}
+
+	/**
 	 * 删除用户,连带删除角色关系
 	 * 
 	 * @return
