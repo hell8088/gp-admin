@@ -6,7 +6,7 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.1.5.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>gp-sys</groupId>
 	<artifactId>gp-admin</artifactId>
@@ -28,18 +28,10 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
-		<!-- <dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-tomcat</artifactId>
-			<exclusions>
-				排除默认的tomcat-jdbc
-				<exclusion>
-					<groupId>org.apache.tomcat</groupId>
-					<artifactId>tomcat-jdbc</artifactId>
-				</exclusion>
-			</exclusions>
-			<scope>provided</scope>
-		</dependency>  -->
+		<!-- <dependency> <groupId>org.springframework.boot</groupId> <artifactId>spring-boot-starter-tomcat</artifactId> 
+			<exclusions> 排除默认的tomcat-jdbc <exclusion> <groupId>org.apache.tomcat</groupId> 
+			<artifactId>tomcat-jdbc</artifactId> </exclusion> </exclusions> <scope>provided</scope> 
+			</dependency> -->
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -68,12 +60,8 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
-		<!-- HikariCP 连接池依赖，从父依赖获取额版本 
-		<dependency>
-			<groupId>com.zaxxer</groupIsd>
-			<artifactId>HikariCP</artifactId>
-			<scope>runtime</scope>
-		</dependency>-->
+		<!-- HikariCP 连接池依赖，从父依赖获取额版本 <dependency> <groupId>com.zaxxer</groupIsd> 
+			<artifactId>HikariCP</artifactId> <scope>runtime</scope> </dependency> -->
 
 		<!--Mybatis -->
 		<dependency>
@@ -87,11 +75,38 @@
 			<artifactId>mysql-connector-java</artifactId>
 		</dependency>
 
+		<!-- quartz -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-quartz</artifactId>
+		</dependency>
+
+		<!-- redis 支持 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-redis</artifactId>
+		</dependency>
+
 		<!-- LEGACYHTML5需要搭配一个额外的库NekoHTML才可用,解决严格的html验证问题 -->
 		<dependency>
 			<groupId>net.sourceforge.nekohtml</groupId>
 			<artifactId>nekohtml</artifactId>
-		</dependency>  
+		</dependency>
+
+		<!-- SFTP 支持 -->
+		<dependency>
+			<groupId>com.jcraft</groupId>
+			<artifactId>jsch</artifactId>
+			<version>0.1.54</version>
+		</dependency>
+
+		<!-- shiro 支持 -->
+		<dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-spring</artifactId>
+			<version>1.4.0</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>

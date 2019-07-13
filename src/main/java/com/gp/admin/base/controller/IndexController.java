@@ -15,20 +15,20 @@ import org.springframework.web.servlet.ModelAndView;
 @RestController
 public class IndexController {
 
-	@RequestMapping("/")
-	public ModelAndView index() {
-		return new ModelAndView("pages/index");
-	}
-	
-	@RequestMapping("/demo")
-	public ModelAndView demo() {
-		return new ModelAndView("pages/demo");
-	}
-	
-	@RequestMapping("/userlist")
-	public ModelAndView userlist() {
-		return new ModelAndView("user/userlist");
-	}
+//	@RequestMapping("/")
+//	public ModelAndView index() {
+//		return new ModelAndView("pages/index");
+//	}
+//	
+//	@RequestMapping("/demo")
+//	public ModelAndView demo() {
+//		return new ModelAndView("pages/demo");
+//	}
+//	
+//	@RequestMapping("/userlist")
+//	public ModelAndView userlist() {
+//		return new ModelAndView("user/userlist");
+//	}
 	
 	
 	@RequestMapping(value = "/session")

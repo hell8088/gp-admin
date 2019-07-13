@@ -28,6 +28,7 @@ import com.zaxxer.hikari.HikariDataSource;
 public class DataSource1Config {
 
 	@Bean(name = "db1DataSource")
+	@Qualifier("db1DataSource")
 	@ConfigurationProperties(prefix = "spring.datasource.db1")
 	@Primary
 	public DataSource dataSource1() {
@@ -67,8 +68,7 @@ public class DataSource1Config {
 
 	@Bean(name = "db1SqlSessionTemplate")
 	@Primary
-	public SqlSessionTemplate sqlSessionTemplate1(
-			@Qualifier("db1SqlSessionFactory") SqlSessionFactory sqlSessionFactory) throws Exception {
+	public SqlSessionTemplate sqlSessionTemplate1(@Qualifier("db1SqlSessionFactory")  SqlSessionFactory sqlSessionFactory) throws Exception {
 		return new SqlSessionTemplate(sqlSessionFactory);
 	}
 }
