@@ -10,8 +10,8 @@ import java.lang.annotation.Target;
  * @author wangjiehan
  *
  */
-@Target({ElementType.TYPE,ElementType.FIELD})  
-@Retention(RetentionPolicy.RUNTIME)  
+@Target({ ElementType.TYPE, ElementType.FIELD })
+@Retention(RetentionPolicy.RUNTIME)
 public @interface Comment {
 	String value() default "";
 }

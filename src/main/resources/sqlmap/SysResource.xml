@@ -1,0 +1,248 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--
+模块说明：
+-->
+<mapper namespace="com.gp.admin.biz.security.dao.SysResourceDao">
+    <sql id="tableName">sys_resource</sql>
+    <!--
+    功能说明：通用全字段查询
+    -->
+    <sql id="commonColumns">id, creater, modifier, created_date AS createdDate, modified_date AS modifiedDate, deleted, name, type, url, permission, parent_id AS parentId, parent_ids AS parentIds, icon AS icon, priority AS priority, available AS available</sql>
+    <sql id="mapCondition">
+        <where>
+            <if test="id != null">AND id = #{id}</if>
+            <if test="idGt != null">AND id &gt; #{idGt}</if>
+            <if test="idLt != null">AND id &lt; #{idLt}</if>
+            <if test="idGe != null">AND id &gt;= #{idGe}</if>
+            <if test="idLe != null">AND id &lt;= #{idLe}</if>
+            <if test="idNe != null">AND id &lt;&gt; #{idNe}</if>
+            <if test="idIsNull != null">AND id IS NULL</if>
+            <if test="idIsNotNull != null">AND .id IS NOT NULL</if>
+            <if test="creater != null">AND creater = #{creater}</if>
+            <if test="createrGt != null">AND creater &gt; #{createrGt}</if>
+            <if test="createrLt != null">AND creater &lt; #{createrLt}</if>
+            <if test="createrGe != null">AND creater &gt;= #{createrGe}</if>
+            <if test="createrLe != null">AND creater &lt;= #{createrLe}</if>
+            <if test="createrNe != null">AND creater &lt;&gt; #{createrNe}</if>
+            <if test="createrIsNull != null">AND creater IS NULL</if>
+            <if test="createrIsNotNull != null">AND .creater IS NOT NULL</if>
+            <if test="createrLike != null and createrLike !=''">AND creater like #{createrLike}</if>
+            <if test="modifier != null">AND modifier = #{modifier}</if>
+            <if test="modifierGt != null">AND modifier &gt; #{modifierGt}</if>
+            <if test="modifierLt != null">AND modifier &lt; #{modifierLt}</if>
+            <if test="modifierGe != null">AND modifier &gt;= #{modifierGe}</if>
+            <if test="modifierLe != null">AND modifier &lt;= #{modifierLe}</if>
+            <if test="modifierNe != null">AND modifier &lt;&gt; #{modifierNe}</if>
+            <if test="modifierIsNull != null">AND modifier IS NULL</if>
+            <if test="modifierIsNotNull != null">AND .modifier IS NOT NULL</if>
+            <if test="modifierLike != null and modifierLike !=''">AND modifier like #{modifierLike}</if>
+            <if test="createdDate != null">AND created_date = #{createdDate}</if>
+            <if test="createdDateGt != null">AND created_date &gt; #{createdDateGt}</if>
+            <if test="createdDateLt != null">AND created_date &lt; #{createdDateLt}</if>
+            <if test="createdDateGe != null">AND created_date &gt;= #{createdDateGe}</if>
+            <if test="createdDateLe != null">AND created_date &lt;= #{createdDateLe}</if>
+            <if test="createdDateNe != null">AND created_date &lt;&gt; #{createdDateNe}</if>
+            <if test="createdDateIsNull != null">AND created_date IS NULL</if>
+            <if test="createdDateIsNotNull != null">AND .created_date IS NOT NULL</if>
+            <if test="modifiedDate != null">AND modified_date = #{modifiedDate}</if>
+            <if test="modifiedDateGt != null">AND modified_date &gt; #{modifiedDateGt}</if>
+            <if test="modifiedDateLt != null">AND modified_date &lt; #{modifiedDateLt}</if>
+            <if test="modifiedDateGe != null">AND modified_date &gt;= #{modifiedDateGe}</if>
+            <if test="modifiedDateLe != null">AND modified_date &lt;= #{modifiedDateLe}</if>
+            <if test="modifiedDateNe != null">AND modified_date &lt;&gt; #{modifiedDateNe}</if>
+            <if test="modifiedDateIsNull != null">AND modified_date IS NULL</if>
+            <if test="modifiedDateIsNotNull != null">AND .modified_date IS NOT NULL</if>
+            <if test="deleted != null">AND deleted = #{deleted}</if>
+            <if test="deletedGt != null">AND deleted &gt; #{deletedGt}</if>
+            <if test="deletedLt != null">AND deleted &lt; #{deletedLt}</if>
+            <if test="deletedGe != null">AND deleted &gt;= #{deletedGe}</if>
+            <if test="deletedLe != null">AND deleted &lt;= #{deletedLe}</if>
+            <if test="deletedNe != null">AND deleted &lt;&gt; #{deletedNe}</if>
+            <if test="deletedIsNull != null">AND deleted IS NULL</if>
+            <if test="deletedIsNotNull != null">AND .deleted IS NOT NULL</if>
+            <if test="name != null">AND name = #{name}</if>
+            <if test="nameGt != null">AND name &gt; #{nameGt}</if>
+            <if test="nameLt != null">AND name &lt; #{nameLt}</if>
+            <if test="nameGe != null">AND name &gt;= #{nameGe}</if>
+            <if test="nameLe != null">AND name &lt;= #{nameLe}</if>
+            <if test="nameNe != null">AND name &lt;&gt; #{nameNe}</if>
+            <if test="nameIsNull != null">AND name IS NULL</if>
+            <if test="nameIsNotNull != null">AND .name IS NOT NULL</if>
+            <if test="nameLike != null and nameLike !=''">AND name like #{nameLike}</if>
+            <if test="type != null">AND type = #{type}</if>
+            <if test="typeGt != null">AND type &gt; #{typeGt}</if>
+            <if test="typeLt != null">AND type &lt; #{typeLt}</if>
+            <if test="typeGe != null">AND type &gt;= #{typeGe}</if>
+            <if test="typeLe != null">AND type &lt;= #{typeLe}</if>
+            <if test="typeNe != null">AND type &lt;&gt; #{typeNe}</if>
+            <if test="typeIsNull != null">AND type IS NULL</if>
+            <if test="typeIsNotNull != null">AND .type IS NOT NULL</if>
+            <if test="typeLike != null and typeLike !=''">AND type like #{typeLike}</if>
+            <if test="url != null">AND url = #{url}</if>
+            <if test="urlGt != null">AND url &gt; #{urlGt}</if>
+            <if test="urlLt != null">AND url &lt; #{urlLt}</if>
+            <if test="urlGe != null">AND url &gt;= #{urlGe}</if>
+            <if test="urlLe != null">AND url &lt;= #{urlLe}</if>
+            <if test="urlNe != null">AND url &lt;&gt; #{urlNe}</if>
+            <if test="urlIsNull != null">AND url IS NULL</if>
+            <if test="urlIsNotNull != null">AND .url IS NOT NULL</if>
+            <if test="urlLike != null and urlLike !=''">AND url like #{urlLike}</if>
+            <if test="permission != null">AND permission = #{permission}</if>
+            <if test="permissionGt != null">AND permission &gt; #{permissionGt}</if>
+            <if test="permissionLt != null">AND permission &lt; #{permissionLt}</if>
+            <if test="permissionGe != null">AND permission &gt;= #{permissionGe}</if>
+            <if test="permissionLe != null">AND permission &lt;= #{permissionLe}</if>
+            <if test="permissionNe != null">AND permission &lt;&gt; #{permissionNe}</if>
+            <if test="permissionIsNull != null">AND permission IS NULL</if>
+            <if test="permissionIsNotNull != null">AND .permission IS NOT NULL</if>
+            <if test="permissionLike != null and permissionLike !=''">AND permission like #{permissionLike}</if>
+            <if test="parentId != null">AND parent_id = #{parentId}</if>
+            <if test="parentIdGt != null">AND parent_id &gt; #{parentIdGt}</if>
+            <if test="parentIdLt != null">AND parent_id &lt; #{parentIdLt}</if>
+            <if test="parentIdGe != null">AND parent_id &gt;= #{parentIdGe}</if>
+            <if test="parentIdLe != null">AND parent_id &lt;= #{parentIdLe}</if>
+            <if test="parentIdNe != null">AND parent_id &lt;&gt; #{parentIdNe}</if>
+            <if test="parentIdIsNull != null">AND parent_id IS NULL</if>
+            <if test="parentIdIsNotNull != null">AND .parent_id IS NOT NULL</if>
+            <if test="parentIds != null">AND parent_ids = #{parentIds}</if>
+            <if test="parentIdsGt != null">AND parent_ids &gt; #{parentIdsGt}</if>
+            <if test="parentIdsLt != null">AND parent_ids &lt; #{parentIdsLt}</if>
+            <if test="parentIdsGe != null">AND parent_ids &gt;= #{parentIdsGe}</if>
+            <if test="parentIdsLe != null">AND parent_ids &lt;= #{parentIdsLe}</if>
+            <if test="parentIdsNe != null">AND parent_ids &lt;&gt; #{parentIdsNe}</if>
+            <if test="parentIdsIsNull != null">AND parent_ids IS NULL</if>
+            <if test="parentIdsIsNotNull != null">AND .parent_ids IS NOT NULL</if>
+            <if test="parentIdsLike != null and parentIdsLike !=''">AND parent_ids like #{parentIdsLike}</if>
+            <if test="icon != null">AND icon = #{icon}</if>
+            <if test="iconGt != null">AND icon &gt; #{iconGt}</if>
+            <if test="iconLt != null">AND icon &lt; #{iconLt}</if>
+            <if test="iconGe != null">AND icon &gt;= #{iconGe}</if>
+            <if test="iconLe != null">AND icon &lt;= #{iconLe}</if>
+            <if test="iconNe != null">AND icon &lt;&gt; #{iconNe}</if>
+            <if test="iconIsNull != null">AND icon IS NULL</if>
+            <if test="iconIsNotNull != null">AND .icon IS NOT NULL</if>
+            <if test="iconLike != null and iconLike !=''">AND icon like #{iconLike}</if>
+            <if test="priority != null">AND priority = #{priority}</if>
+            <if test="priorityGt != null">AND priority &gt; #{priorityGt}</if>
+            <if test="priorityLt != null">AND priority &lt; #{priorityLt}</if>
+            <if test="priorityGe != null">AND priority &gt;= #{priorityGe}</if>
+            <if test="priorityLe != null">AND priority &lt;= #{priorityLe}</if>
+            <if test="priorityNe != null">AND priority &lt;&gt; #{priorityNe}</if>
+            <if test="priorityIsNull != null">AND priority IS NULL</if>
+            <if test="priorityIsNotNull != null">AND .priority IS NOT NULL</if>
+            <if test="available != null">AND available = #{available}</if> AND deleted = 0
+        </where>
+    </sql>
+    <!--
+    功能说明：插入数据，如果实体的属性值为空则不处理
+    -->
+    <insert id="insert" parameterType="Map">INSERT INTO 
+        <include refid="tableName"></include>
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="model.creater != null">creater,</if>
+            <if test="model.modifier != null">modifier,</if>
+            <if test="model.createdDate != null">created_date,</if>
+            <if test="model.modifiedDate != null">modified_date,</if>
+            <if test="model.deleted != null">deleted,</if>
+            <if test="model.name != null">name,</if>
+            <if test="model.type != null">type,</if>
+            <if test="model.url != null">url,</if>
+            <if test="model.permission != null">permission,</if>
+            <if test="model.parentId != null">parent_id,</if>
+            <if test="model.parentIds != null">parent_ids,</if>
+            <if test="model.icon != null">icon,</if>
+            <if test="model.priority != null">priority,</if>
+            <if test="model.available != null">available</if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            <if test="model.creater != null">#{model.creater},</if>
+            <if test="model.modifier != null">#{model.modifier},</if>
+            <if test="model.createdDate != null">#{model.createdDate},</if>
+            <if test="model.modifiedDate != null">#{model.modifiedDate},</if>
+            <if test="model.deleted != null">#{model.deleted},</if>
+            <if test="model.name != null">#{model.name},</if>
+            <if test="model.type != null">#{model.type},</if>
+            <if test="model.url != null">#{model.url},</if>
+            <if test="model.permission != null">#{model.permission},</if>
+            <if test="model.parentId != null">#{model.parentId},</if>
+            <if test="model.parentIds != null">#{model.parentIds},</if>
+            <if test="model.icon != null">#{model.icon},</if>
+            <if test="model.priority != null">#{model.priority},</if>
+            <if test="model.available != null">#{model.available}</if>
+        </trim>
+    </insert>
+    <!--
+    功能说明：插入数据，如果实体的属性值为空则不处理
+    -->
+    <insert id="batchInsert">INSERT INTO 
+        <include refid="tableName"></include>
+        <trim prefix="(" suffix=")" suffixOverrides=",">creater,modifier,created_date,modified_date,deleted,name,type,url,permission,parent_id,parent_ids,icon,priority,available</trim>
+        <foreach open="VALUES" collection="list" item="model" separator=",">(#{model.creater},#{model.modifier},#{model.createdDate},#{model.modifiedDate},#{model.deleted},#{model.name},#{model.type},#{model.url},#{model.permission},#{model.parentId},#{model.parentIds},#{model.icon},#{model.priority},#{model.available})</foreach>
+    </insert>
+    <!--
+    功能说明：更新数据，如果实体的属性值为空则不处理
+    -->
+    <update id="update" parameterType="Map">UPDATE 
+        <include refid="tableName"></include>
+        <set>
+            <if test="model.creater != null">creater = #{model.creater},</if>
+            <if test="model.modifier != null">modifier = #{model.modifier},</if>
+            <if test="model.createdDate != null">created_date = #{model.createdDate},</if>
+            <if test="model.modifiedDate != null">modified_date = #{model.modifiedDate},</if>
+            <if test="model.deleted != null">deleted = #{model.deleted},</if>
+            <if test="model.name != null">name = #{model.name},</if>
+            <if test="model.type != null">type = #{model.type},</if>
+            <if test="model.url != null">url = #{model.url},</if>
+            <if test="model.permission != null">permission = #{model.permission},</if>
+            <if test="model.parentId != null">parent_id = #{model.parentId},</if>
+            <if test="model.parentIds != null">parent_ids = #{model.parentIds},</if>
+            <if test="model.icon != null">icon = #{model.icon},</if>
+            <if test="model.priority != null">priority = #{model.priority},</if>
+            <if test="model.available != null">available = #{model.available}</if>
+        </set>WHERE id = #{model.id} AND deleted = 0
+    </update>
+    <!--
+    功能说明：插入数据，对属性值是否为空不敏感
+    -->
+    <update id="fullUpdate" parameterType="Map">UPDATE 
+        <include refid="tableName"></include> SET creater = #{model.creater},modifier = #{model.modifier},created_date = #{model.createdDate},modified_date = #{model.modifiedDate},deleted = #{model.deleted},name = #{model.name},type = #{model.type},url = #{model.url},permission = #{model.permission},parent_id = #{model.parentId},parent_ids = #{model.parentIds},icon = #{model.icon},priority = #{model.priority},available = #{model.available} WHERE id = #{model.id} AND deleted = 0
+    </update>
+    <!--
+    功能说明：删除数据
+    -->
+    <delete id="delete" parameterType="Map">UPDATE 
+        <include refid="tableName"></include> SET deleted = 1 
+        <include refid="mapCondition"></include>
+    </delete>
+    <!--
+    功能说明：根据主键删除数据
+    -->
+    <delete id="deleteByPrimaryKey">UPDATE 
+        <include refid="tableName"></include> SET deleted = 1 WHERE id = #{id}
+    </delete>
+    <!--
+    功能说明：数据查询
+    -->
+    <select id="find" parameterType="Map" resultType="com.gp.admin.biz.security.domain.SysResource">SELECT
+        <include refid="commonColumns"></include>FROM 
+        <include refid="tableName"></include>
+        <include refid="mapCondition"></include>
+        <if test="orderByString != null and orderByString != ''">ORDER BY ${orderByString}</if>
+        <if test="rowBounds != null">limit ${rowBounds.offset},${rowBounds.limit}</if>
+    </select>
+    <!--
+    功能说明：数据查询中有分页时查询总记录数
+    -->
+    <select id="findCount" parameterType="Map" resultType="Long">SELECT COUNT(1) FROM 
+        <include refid="tableName"></include>
+        <include refid="mapCondition"></include>
+    </select>
+    <!--
+    功能说明：根据主键查询
+    -->
+    <select id="findByPrimaryKey" parameterType="Map" resultType="com.gp.admin.biz.security.domain.SysResource">SELECT
+        <include refid="commonColumns"></include>FROM 
+        <include refid="tableName"></include> WHERE id = #{id} AND deleted = 0
+    </select>
+</mapper>

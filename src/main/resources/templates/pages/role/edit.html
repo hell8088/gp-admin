@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/main.html}">
+<body layout:fragment="content">
+	<div class="layui-tab layui-tab-brief">
+		<ul class="layui-tab-title">
+			<li class="layui-this"><a href="#">角色定义</a></li>
+		</ul>
+	</div>
+	<div class="layui-form layui-tab-content" id="LAY_ucm"
+		style="padding: 5px 0;">
+		<div class="layui-tab-item layui-show">
+			<div class="layui-main">
+				<!-- 主框架内 -->
+				<input id="roleId" type="hidden" th:value="${model.id}">
+				<div class="layui-form">
+					<div class="layui-form-item">
+						<label class="layui-form-label">角色名</label>
+						<div class="layui-input-inline" style="width: 20%;">
+							<input id="roleName" type="text" name="title" lay-verify="title"
+								autocomplete="off" placeholder="角色名称" class="layui-input" th:value="${model.role}">
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">角色描述</label>
+						<div class="layui-input-inline" style="width: 20%;">
+							<input id="description" type="text" name="title" lay-verify="title"
+								autocomplete="off" placeholder="角色描述" class="layui-input" th:value="${model.description}">
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">资源</label>
+						<!-- 资源树 -->
+						<div class="layui-input-block">
+							<div id="test7" class="demo-tree"></div>
+						</div>
+					</div>
+
+					<div class="layui-form-item">
+						<div class="layui-input-block">
+							<button class="layui-btn" lay-submit lay-filter="formDemo"
+								onclick="save()">提交</button>
+							<button type="reset" class="layui-btn layui-btn-primary" onclick="returnlist()">返回</button>
+						</div>
+					</div>
+				</div>
+
+
+				<!-- /主框架内 -->
+			</div>
+		</div>
+	</div>
+
+	<script>
+		layui.use([ 'tree', 'util' ], function() {
+			var tree = layui.tree, layer = layui.layer, util = layui.util
+			//获取资源数据并加载树
+			getResourceData(tree);
+
+		});
+
+		function getResourceData(tree) {
+			var roleId = $("#roleId").val();
+			params = {
+					roleId : roleId
+				};
+			$.ajax({
+				type : "post",
+				data : params,
+				url : "/api/resource/tree",
+				success : function(data) {
+					tree.render({
+						elem : '#test7',
+						data : data,
+						showCheckbox : true,
+						id : 'tid'
+					});
+				}
+			});
+		}
+
+		function save() {
+			var roleId = $("#roleId").val();
+			var roleName = $("#roleName").val();
+			var description = $("#description").val();
+			var checkData = layui.tree.getChecked('tid');
+			params = {
+					roleId : roleId,
+					roleName : roleName,
+					description : description,
+					treeNodes : JSON.stringify(checkData)
+				};
+			$.ajax({
+				type : "post",
+				data : params,
+				url : "/api/role/save",
+				success : function(data) {
+					window.open(BASE_URL + "role/list","_self");
+				}
+			});
+		}
+		
+		function returnlist(){
+			window.open(BASE_URL + "role/list","_self");
+		}
+	</script>
+
+</body>
+</html>

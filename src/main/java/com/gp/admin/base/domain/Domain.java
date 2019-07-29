@@ -30,7 +30,7 @@ public abstract class Domain implements Serializable {
 	@Comment("创建人")
 	@Column(length = 50)
 	private String creater;
-	
+
 	@Comment("修改人")
 	@Column(length = 50)
 	private String modifier;

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/main.html}">
+<body layout:fragment="content">
+	<div class="layui-tab layui-tab-brief">
+		<ul class="layui-tab-title">
+			<li class="layui-this"><a href="#">新增用户</a></li>
+		</ul>
+	</div>
+	<div class="layui-form layui-tab-content" id="LAY_ucm"
+		style="padding: 5px 0;">
+		<div class="layui-tab-item layui-show">
+			<div class="layui-main">
+				<!-- 主框架内 -->
+
+				<input id="id" type="hidden" th:value="${model.id}"> <input
+					id="roleIds" type="hidden" th:value="${model.roleIds}">
+
+				<div class="layui-form">
+					<div class="layui-form-item">
+						<label class="layui-form-label">用户名</label>
+						<div class="layui-input-inline" style="width: 20%;">
+							<input id="username" type="text" name="title" lay-verify="title"
+								autocomplete="off" placeholder="用户名" class="layui-input"
+								th:value="${model.username}">
+						</div>
+					</div>
+
+					<div class="layui-form-item">
+						<label class="layui-form-label">密码</label>
+						<div class="layui-input-inline">
+							<input id="password" type="password" name="password"
+								lay-verify="pass" placeholder="请输入密码" autocomplete="off"
+								class="layui-input">
+						</div>
+						<div class="layui-form-mid layui-word-aux"></div>
+					</div>
+
+					<div class="layui-form-item">
+						<label class="layui-form-label">角色</label>
+						<div id="roleDiv" class="layui-input-block"></div>
+					</div>
+
+
+					<div class="layui-form-item">
+						<div class="layui-input-block">
+							<button class="layui-btn" lay-submit lay-filter="formDemo"
+								onclick="save()">提交</button>
+							<button type="reset" class="layui-btn layui-btn-primary"
+								onclick="returnlist()">返回</button>
+						</div>
+					</div>
+				</div>
+
+				<!-- /主框架内 -->
+			</div>
+		</div>
+	</div>
+
+	<script>
+		layui.use('form', function() {
+			var form = layui.form;
+			initRoles();
+			form.render();
+
+			form.on('checkbox(chkfilter)', function(data) {
+				if (this.checked == true)
+					$("#" + this.id).attr("checked", "true")
+				else
+					$("#" + this.id).attr("checked", "false")
+			});
+		});
+
+		function initRoles() {
+			var roleIds = $("#roleIds").val();
+			var roleArray = new Array();
+			if (roleIds != null && roleIds != "") {
+				roleArray = roleIds.split(",");
+			}
+			var checkList = "";
+			var checkDiv = $("#roleDiv");
+			$.ajax({
+				type : "post",
+				async : false,
+				url : "/api/role/all",
+				success : function(data) {
+					if (roleArray.length <= 0) {
+						for (i = 0; i < data.length; i++) {
+							checkList += "<input id='"+data[i].id+"' type='checkbox' name='like[write]' lay-filter='chkfilter' title='"+data[i].role+"'/>";
+						}
+					} else {
+						for (i = 0; i < data.length; i++) {
+							if (isCheck(roleArray, data[i].id)) {
+								checkList += "<input id='"+data[i].id+"' type='checkbox' name='like[write]' lay-filter='chkfilter' title='"+data[i].role+"' checked/>";
+							} else {
+								checkList += "<input id='"+data[i].id+"' type='checkbox' name='like[write]' lay-filter='chkfilter' title='"+data[i].role+"'/>";
+							}
+						}
+					}
+					checkDiv.append(checkList);
+				}
+			});
+		}
+
+		function isCheck(roleArray, id) {
+			var flag = 1;
+			for (j = 0; j < roleArray.length; j++) {
+				if (roleArray[j] == id)
+					flag = 2;
+			}
+			if (flag == 2)
+				return true;
+			else
+				return false;
+		}
+
+		function save() {
+			var roleIds = "";
+			$("#roleDiv").find("input[type='checkbox']").each(function() {
+				if (this.checked)
+					roleIds += this.id + ",";	
+			});
+			var id = $("#id").val();
+			var username = $("#username").val();
+			var password = $("#password").val();
+			params = {
+					id : id,
+					username : username,
+					password : password,
+					roleIds : roleIds
+				};
+			$.ajax({
+				type : "post",
+				data : params,
+				url : "/api/user/save",
+				success : function(data) {
+					window.open(BASE_URL + "user/list","_self");
+				}
+			});
+		}
+		
+		function returnlist(){
+			window.open(BASE_URL + "user/list","_self");
+		}
+	</script>
+
+</body>
+</html>

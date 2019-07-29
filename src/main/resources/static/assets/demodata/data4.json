@@ -1,0 +1,16 @@
+{
+	"code": 0,
+	"msg": "",
+	"data": [{
+		"id": "2",
+		"permission": null,
+		"url": null,
+		"parentId": "-1"
+	}, {
+		"id": "3",
+		"permission": "resource:*",
+		"url": "/resource",
+		"parentId": "2"
+	}]
+ 
+}
