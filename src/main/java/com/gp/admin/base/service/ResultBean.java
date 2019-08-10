@@ -17,5 +17,14 @@ public class ResultBean {
 		r.setCount(count);
 		return r;
 	}
+	
+	public static <T> ResultData<T> failBuild(T t, long count,String errMsg) {
+		ResultData<T> r = new ResultData<T>();
+		r.setCode(500);
+		r.setMsg(errMsg);
+		r.setData(t);
+		r.setCount(count);
+		return r;
+	}
 
 }

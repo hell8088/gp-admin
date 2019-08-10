@@ -1,6 +1,7 @@
 package com.gp.admin.biz.security.service;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -25,7 +26,7 @@ public class SysRoleService {
 		List<SysRole> list = sysRoleDao.find(new HashMap<>());
 		return list;
 	}
-	
+
 	public List<SysRole> getRole(int page, int limit) {
 		Map<String, Object> filter = new HashMap<>();
 		int offset = (page - 1) * limit;
@@ -38,8 +39,8 @@ public class SysRoleService {
 	public long getRoleCount() {
 		return sysRoleDao.findCount(new HashMap<>());
 	}
-	
-	public SysRole getRoleById(long id){
+
+	public SysRole getRoleById(long id) {
 		SysRole role = sysRoleDao.findByPrimaryKey(id);
 		return role;
 	}
@@ -49,11 +50,41 @@ public class SysRoleService {
 		param.put("model", role);
 		sysRoleDao.insert(param);
 	}
-	
-	public void updateRole(SysRole role){
+
+	public void updateRole(SysRole role) {
 		Map<String, SysRole> param = new HashMap<>();
 		param.put("model", role);
 		sysRoleDao.update(param);
+	}
+
+	public int delRole(Long id) {
+		return sysRoleDao.deleteByPrimaryKey(id);
+	}
+
+	/**
+	 * 根据 id 集合查询角色
+	 * @param roleIds
+	 * @return
+	 */
+	public List<SysRole> getRoleByIds(List<Long> roleIds) {
+		Map<String, Object> filter = new HashMap<>();
+		filter.put("roleIds", roleIds);
+		return sysRoleDao.getRoleByIds(filter);
+	}
+	
+	
+	
+	public List<SysRole> getRoles(String roleIds) {
+		List<SysRole> list = null;
+		String[] roleIdArray = roleIds.split(",");
+		if (roleIdArray.length > 0) {
+			List<Long> ids = new LinkedList<Long>();
+			for (int i = 0; i < roleIdArray.length; i++) {
+				ids.add(Long.valueOf(roleIdArray[i]));
+			}
+			list = getRoleByIds(ids);
+		}
+		return list;
 	}
 
 }

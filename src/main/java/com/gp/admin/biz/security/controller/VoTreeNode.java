@@ -44,6 +44,4 @@ public class VoTreeNode {
 		this.url = url;
 	}
 
-	
-	
 }

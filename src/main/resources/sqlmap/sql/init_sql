@@ -1,0 +1,17 @@
+INSERT INTO `sys_resource` VALUES ('1', null, null, '2017-12-28 20:23:06', '2017-12-29 12:58:45', '0', '资源', 'menu', '', null, '0', '0/', null, '0', '1');
+INSERT INTO `sys_resource` VALUES ('2', null, null, '2017-12-29 08:43:53', '2017-12-29 12:58:40', '0', '系统管理', 'menu', null, null, '1', '0/1/', 'fa fa-desktop', '99', '1');
+INSERT INTO `sys_resource` VALUES ('3', null, null, '2017-12-29 08:45:57', '2017-12-29 11:56:06', '0', '资源管理', 'menu', '/resource', 'resource:*', '2', '0/1/2/', null, '1', '1');
+INSERT INTO `sys_resource` VALUES ('4', null, null, '2017-12-29 08:46:23', '2017-12-29 11:56:12', '0', '角色管理', 'menu', '/role', 'role:*', '2', '0/1/2/', null, '2', '1');
+INSERT INTO `sys_resource` VALUES ('5', null, null, '2017-12-29 08:46:41', '2017-12-29 11:56:21', '0', '用户管理', 'menu', '/user', 'user:*', '2', '0/1/2/', null, '3', '1');
+INSERT INTO `sys_resource` VALUES ('6', null, null, '2017-12-29 11:33:10', '2017-12-29 12:58:24', '0', '资源新增', 'button', null, 'resource:create', '3', '0/1/2/3/', null, '1', '1');
+INSERT INTO `sys_resource` VALUES ('7', null, null, '2017-12-29 11:33:21', '2017-12-29 12:58:26', '0', '资源修改', 'button', null, 'resource:update', '3', '0/1/2/3/', null, '2', '1');
+INSERT INTO `sys_resource` VALUES ('8', null, null, '2017-12-29 11:33:47', '2017-12-29 12:58:27', '0', '资源删除', 'button', null, 'resource:delete', '3', '0/1/2/3/', null, '3', '1');
+INSERT INTO `sys_resource` VALUES ('9', null, null, '2017-12-29 11:34:09', '2017-12-29 12:58:31', '0', '资源查看', 'button', null, 'resource:view', '3', '0/1/2/3/', null, '4', '1');
+INSERT INTO `sys_resource` VALUES ('10', null, null, '2017-12-29 11:37:51', '2017-12-29 12:58:15', '0', '角色新增', 'button', null, 'role:create', '4', '0/1/2/4/', null, '1', '1');
+INSERT INTO `sys_resource` VALUES ('11', null, null, '2017-12-29 11:38:32', '2017-12-29 12:58:16', '0', '角色修改', 'button', null, 'role:update', '4', '0/1/2/4/', null, '2', '1');
+INSERT INTO `sys_resource` VALUES ('12', null, null, '2017-12-29 11:38:34', '2017-12-29 12:58:19', '0', '角色删除', 'button', null, 'role:delete', '4', '0/1/2/4/', null, '3', '1');
+INSERT INTO `sys_resource` VALUES ('13', null, null, '2017-12-29 11:38:36', '2017-12-29 12:58:22', '0', '角色查看', 'button', null, 'role:view', '4', '0/1/2/4/', null, '4', '1');
+INSERT INTO `sys_resource` VALUES ('15', null, null, '2017-12-29 12:05:25', '2017-12-29 12:58:05', '0', '用户新增', 'button', null, 'user:create', '5', '0/1/2/5/', null, '1', '1');
+INSERT INTO `sys_resource` VALUES ('16', null, null, '2017-12-29 12:56:26', '2017-12-29 12:58:07', '0', '用户修改', 'button', null, 'user:update', '5', '0/1/2/5/', null, '2', '1');
+INSERT INTO `sys_resource` VALUES ('17', null, null, '2017-12-29 12:56:43', '2017-12-29 12:56:53', '0', '用户删除', 'button', null, 'user:delete', '5', '0/1/2/5/', null, '3', '1');
+INSERT INTO `sys_resource` VALUES ('18', null, null, '2017-12-29 12:57:12', '2017-12-29 12:58:10', '0', '用户查看', 'button', null, 'user:view', '5', '0/1/2/5/', null, '4', '1');

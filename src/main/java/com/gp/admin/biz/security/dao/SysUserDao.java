@@ -15,4 +15,5 @@ public interface SysUserDao extends BaseDao<SysUser> {
 
 	List<SysUser> findByPage(Map<String, Object> filter);
 
+	int lockUser(Map<String, Object> filter);
 }

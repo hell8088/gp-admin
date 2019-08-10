@@ -9,16 +9,16 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
 /**
- * Custmoer Filter Demo
- * 
+ *
  * @author: wangjiehan
- * @date: 2019年7月15日 下午7:49:36
+ * @date: 2019年8月8日 下午3:37:00
  */
-public class SecondFilter implements Filter {
+public class ResourceFilter implements Filter {
+
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		System.out.println("zzz SecondFilter");
 		chain.doFilter(request, response);
 	}
+
 }

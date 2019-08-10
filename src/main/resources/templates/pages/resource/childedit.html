@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/main.html}">
+<body layout:fragment="content">
+	<div class="layui-tab layui-tab-brief">
+		<ul class="layui-tab-title">
+			<li class="layui-this"><a href="#">添加资源</a></li>
+		</ul>
+	</div>
+	<div class="layui-form layui-tab-content" id="LAY_ucm"
+		style="padding: 5px 0;">
+		<div class="layui-tab-item layui-show">
+			<div class="layui-main">
+				<!-- 主框架内 -->
+
+				<form action="/resource/add" method="post">
+					<input id="rootId" name="rootId" type="hidden" th:value="${rootId}">
+					<input id="parentId" name="parentId" type="hidden" th:value="${parentId}">
+					<div class="layui-form-item">
+						<label class="layui-form-label">所属目录</label>
+						<div class="layui-input-inline" style="width: 20%;">
+							<input id="parentName" name="parentName" type="text" placeholder="资源名称" class="layui-input" th:value="${parentName}" readonly="readonly" style="background-color:#DCDCDC">
+						</div>
+					</div>
+				
+					<div class="layui-form-item">
+						<label class="layui-form-label">资源名称</label>
+						<div class="layui-input-inline" style="width: 20%;">
+							<input id="name" type="text" name="name" placeholder="资源名称" class="layui-input">
+						</div>
+					</div>
+
+					<input id="type" name="type" type="hidden">
+					<div class="layui-form-item">
+						<label class="layui-form-label">资源类型</label>
+						<div class="layui-input-inline" style="width: 20%;">
+							<select id="typeselect" class="layui-input-inline" onchange="selectChange()" lay-filter="typeselect">
+								<option value='0'>--请选择--</option>
+								<option th:each="type,userStat:${typeList}" th:value="${type.key}" th:text="${type.value}"></option>
+							</select>
+						</div>
+					</div>
+
+					<div class="layui-form-item">
+						<label class="layui-form-label">资源地址</label>
+						<div class="layui-input-inline" style="width: 20%;">
+							<input id="url" name="url" type="text" placeholder="url" class="layui-input">
+						</div>
+					</div>
+
+					<div class="layui-form-item">
+						<label class="layui-form-label">访问权限码</label>
+						<div class="layui-input-inline" style="width: 20%;">
+							<input id="permission" name="permission" type="text" placeholder="权限码 e.g. resource:*" class="layui-input">
+						</div>
+					</div>
+					
+					<div class="layui-form-item">
+						<label class="layui-form-label">优先级</label>
+						<div class="layui-input-inline" style="width: 20%;">
+							<input id="priority" name="priority" type="text" placeholder="0-9 数字" class="layui-input">
+						</div>
+					</div>
+					
+					<div class="layui-form-item">
+						<div class="layui-input-block">
+							<button class="layui-btn" type="button" 
+								onclick="doSave()">提交</button>
+							<button class="layui-btn layui-btn-primary" type="button" 
+								onclick="doReturn()">返回</button>
+						</div>
+					</div>
+				</form>
+
+				<!-- /主框架内 -->
+			</div>
+		</div>
+	</div>
+
+	<script>
+		layui.use('form', function() {
+			var form = layui.form;
+			form.render();
+			
+			form.on('select(typeselect)', function(data){
+			    $("#type").val(data.value);
+			});
+		});
+	
+		function doSave() {
+			if(Validate()){
+				document.forms[0].submit();
+			}
+		}
+		
+		function Validate() {
+			var name = $('#name').val();
+			if(name==null || name==""){
+				alert("资源名称不能为空！");
+				return false;
+			}
+			var type = $("#typeselect option:selected").val();
+			if(type==null || type==""){
+				alert("资源类型不能为空！");
+				return false;
+			}
+			var rootId = $('#rootId').val();
+			if(rootId!=1 && rootId!=0){
+				alert("资源目录支持两级！您添加的目录超过2级，请重新添加");
+				return false;
+			}
+			return true;
+		}
+		
+		function doReturn(){
+			window.open(BASE_URL + "resource/list","_self");
+		}
+		
+	</script>
+
+</body>
+</html>

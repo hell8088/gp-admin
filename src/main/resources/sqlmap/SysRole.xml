@@ -198,4 +198,15 @@
         ORDER BY id DESC LIMIT #{offset},1) AS t2
         WHERE t1.deleted = 0 AND t1.id &lt;= t2.tmp_id ORDER BY t1.id DESC LIMIT #{limit}
     </select>
+    
+    <select id="getRoleByIds"  parameterType="Map" resultType="com.gp.admin.biz.security.domain.SysRole">
+		SELECT <include refid="commonColumns"></include>
+		FROM  
+		<include refid="tableName"></include> 
+		WHERE id in
+		<foreach collection="roleIds" index="index" item="item" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</select>
 </mapper>

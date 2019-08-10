@@ -91,15 +91,43 @@
 	            var layEvent = obj.event;
 
 	            if (layEvent === 'del') {
-	                layer.msg('删除' + data.id);
+	            	layer.confirm('真的删除行么', function(index){
+	            		resourceDel(data);
+	        		});
+	                //layer.msg('删除' + data.id);
 	            } else if (layEvent === 'edit') {
-	                layer.msg('修改' + data.id);
+	                //layer.msg('修改' + data.id);
+	                resourceEdit(data);
 	            } else if (layEvent === 'add') {
-	            	layer.msg('新增子节点' + data.id);
+	            	//layer.msg('新增子节点' + data.id);
+	            	resourceAdd(data);
 	            }
 	        });
 	
 	    });
+		
+		function resourceAdd(data){
+			window.open(BASE_URL + "resource/child?rootId="+data.parentId+"&parentId="+data.id+"&parentName="+data.name,"_self");
+		}
+		
+		function resourceEdit(data){
+			window.open(BASE_URL + "resource/edit?id="+data.id,"_self");
+		}
+		
+		function resourceDel(obj){
+			params = {
+					id : obj.id
+				};
+			$.ajax({
+				type : "post",
+				data : params,
+				url : "/api/resource/delete",
+				success : function(resObj) {
+					//alert(resObj.msg);
+					window.open(BASE_URL + "resource/list","_self");
+				}
+			});
+		}
 	</script>
 
 </body>

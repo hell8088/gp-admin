@@ -79,7 +79,7 @@ public class SysSecurityApi {
 	 * @return
 	 */
 	@RequestMapping("/resource/tree")
-	private List<VoResourceTree> resourceTreeForRole(Long roleId) {
+	public List<VoResourceTree> resourceTreeForRole(Long roleId) {
 		SysResource root = null;
 		List<VoResourceTree> treeNodes = new LinkedList<>();
 		List<SysResource> list = resourceService.getResources(0); // 获取所有资源节点
@@ -87,8 +87,6 @@ public class SysSecurityApi {
 			// 构建子节点 map
 			Map<Long, List<SysResource>> children = buildChildren(list);
 			root = children.get(0L).get(0); // 获取根结点
-			
-			
 			Map<Long, Boolean> roleIdMap = null;
 			// 绑定已有权限节点
 			SysRole role = roleService.getRoleById(roleId == null ? 0 : roleId);
@@ -108,10 +106,15 @@ public class SysSecurityApi {
 		return treeNodes;
 	}
 
+	@RequestMapping("/resource/delete")
+	public ResultData<Integer> DeleteResource(Long id) {
+		return resourceService.resourceDelete(id);
+	}
+
 	/*--------------------------  role  --------------------------*/
 
 	@RequestMapping("/role/save")
-	private String saveRole(Long roleId, String roleName, String description, String treeNodes) {
+	public String saveRole(Long roleId, String roleName, String description, String treeNodes) {
 		String ids = "";
 		if (!treeNodes.equals("[]")) {
 			List<VoResourceTree> list = JSON.parseArray(treeNodes, VoResourceTree.class);
@@ -138,6 +141,11 @@ public class SysSecurityApi {
 		return list;
 	}
 
+	@RequestMapping("/role/del")
+	public int delRole(Long id) {
+		return roleService.delRole(id);
+	}
+
 	/*--------------------------  user  --------------------------*/
 
 	@RequestMapping("/user/save")
@@ -154,6 +162,16 @@ public class SysSecurityApi {
 		List<SysUser> list = userService.getUser(page, limit);
 		long count = userService.getUserCount();
 		return ResultBean.successBuild(list, count);
+	}
+
+	@RequestMapping("/user/del")
+	public int delUser(Long id) {
+		return userService.delUser(id);
+	}
+
+	@RequestMapping("/user/lock")
+	public int lockUser(Long id, Boolean lockStatus) {
+		return userService.lockUser(id, lockStatus);
 	}
 
 	/*--------------------------  private  --------------------------*/

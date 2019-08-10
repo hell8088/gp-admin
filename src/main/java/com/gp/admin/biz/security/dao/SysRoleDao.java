@@ -15,4 +15,6 @@ public interface SysRoleDao extends BaseDao<SysRole>{
 
 	List<SysRole> findByPage(Map<String, Object> filter);
 	
+	List<SysRole> getRoleByIds(Map<String, Object> filter);
+	
 }

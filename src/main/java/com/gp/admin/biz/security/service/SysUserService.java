@@ -24,8 +24,8 @@ public class SysUserService {
 	@Resource
 	private SysUserDao sysUserDao;
 
-	public List<SysUser> getUser() {
-		List<SysUser> users = sysUserDao.find(new HashMap<>());
+	public List<SysUser> getUsers(Map<String, Object> filter) {
+		List<SysUser> users = sysUserDao.find(filter);
 		return users;
 	}
 
@@ -37,16 +37,16 @@ public class SysUserService {
 		List<SysUser> list = sysUserDao.findByPage(filter);
 		return list;
 	}
-	
-	public long getUserCount(){
+
+	public long getUserCount() {
 		return sysUserDao.findCount(new HashMap<>());
 	}
-	
-	public SysUser getUserById(long id){
+
+	public SysUser getUserById(long id) {
 		return sysUserDao.findByPrimaryKey(id);
 	}
-	
-	public int addUser(String username, String password, String roleIds){
+
+	public int addUser(String username, String password, String roleIds) {
 		SysUser user = new SysUser();
 		user.setUsername(username);
 		user.setPassword(password);
@@ -57,22 +57,33 @@ public class SysUserService {
 		user.setModified_date(new Date());
 		user.setModifier("addUser");
 		user.setLocked(true);
-		
+
 		Map<String, SysUser> param = new HashMap<>();
 		param.put("model", user);
 		return sysUserDao.insert(param);
 	}
-	
-	public int updateUser(Long id,String username, String password, String roleIds){
+
+	public int updateUser(Long id, String username, String password, String roleIds) {
 		SysUser user = sysUserDao.findByPrimaryKey(id);
 		user.setUsername(username);
 		user.setPassword(password);
 		user.setRoleIds(roleIds);
 		user.setModifier("updateUser");
 		user.setModifiedDate(new Date());
-		
+
 		Map<String, SysUser> param = new HashMap<>();
 		param.put("model", user);
 		return sysUserDao.update(param);
+	}
+
+	public int delUser(Long id) {
+		return sysUserDao.deleteByPrimaryKey(id);
+	}
+
+	public int lockUser(Long id, Boolean lockStatus) {
+		Map<String, Object> filter = new HashMap<>();
+		filter.put("id", id);
+		filter.put("lockStatus", lockStatus);
+		return sysUserDao.lockUser(filter);
 	}
 }

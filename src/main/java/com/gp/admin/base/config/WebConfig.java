@@ -9,9 +9,8 @@ import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import com.gp.admin.base.filter.FirstFilter;
-import com.gp.admin.base.filter.SecondFilter;
-import com.gp.admin.base.interceptor.FirstInterceptor;
+import com.gp.admin.base.filter.ResourceFilter;
+import com.gp.admin.base.interceptor.ResourceInterceptor;
 
 /**
  *
@@ -34,26 +33,23 @@ public class WebConfig implements WebMvcConfigurer {
 	}
 
 	@Bean
-	public FilterRegistrationBean<FirstFilter> getFirstFilter() {
-		FilterRegistrationBean<FirstFilter> firstBean = new FilterRegistrationBean<>();
-		firstBean.setFilter(new FirstFilter());
-		firstBean.addUrlPatterns("/*");
-		logger.info("zzz firstFilter load success");
-		return firstBean;
+	public FilterRegistrationBean<ResourceFilter> getResourceFilter() {
+		FilterRegistrationBean<ResourceFilter> resourceFilter = new FilterRegistrationBean<>();
+		resourceFilter.setFilter(new ResourceFilter());
+		resourceFilter.addUrlPatterns("/*");
+		logger.info("zzz ResourceFilter load success");
+		return resourceFilter;
 	}
 
 	@Bean
-	public FilterRegistrationBean<SecondFilter> getSecondFilter() {
-		FilterRegistrationBean<SecondFilter> secondBean = new FilterRegistrationBean<>();
-		secondBean.setFilter(new SecondFilter());
-		secondBean.addUrlPatterns("/*");
-		logger.info("zzz secondFilter load success");
-		return secondBean;
+	public ResourceInterceptor getResourceInterceptor() {
+		return new ResourceInterceptor();
 	}
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(new FirstInterceptor()).addPathPatterns("/**");
+		registry.addInterceptor(getResourceInterceptor()).addPathPatterns("/**").excludePathPatterns("/", "/login",
+				"/logout", "/assets/**", "/api/**");
 	}
 
 }
