@@ -15,8 +15,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.gp.admin.biz.security.domain.SysUser;
 
-import groovyjarjarpicocli.CommandLine.Model;
-
 /**
  *
  * @author: wangjiehan

@@ -9,11 +9,9 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.gp.admin.biz.event.AnalyticResult;
-import com.gp.admin.biz.event.AnalyticSuccessEvent;
+import com.gp.admin.biz.event.ResourceEvent;
 import com.gp.admin.common.sftp.SFTPHelper;
 
 @RunWith(SpringRunner.class)
@@ -51,7 +49,7 @@ public class GpAdminApplicationTests {
 		// "name", "passwd", "config2 : rasPath2");
 	}
 
-	@Test
+	//@Test
 	public void redisTest() {
 		System.out.println("zzz redis test");
 		System.out.println(redisTemplate.keys("*").size());
@@ -59,11 +57,10 @@ public class GpAdminApplicationTests {
 		System.out.println(redisTemplate.opsForValue().get("gpadmin:test1"));
 	}
 
-	// @Test
+	@Test
 	public void testEvent() {
-		AnalyticResult result = new AnalyticResult();
-		result.setResultMsg("分析完成");
-		context.publishEvent(new AnalyticSuccessEvent(this, "", result));
+		ResourceEvent resEvent = new ResourceEvent(this,"resourceUrl");
+		context.publishEvent(resEvent);
 	}
 
 }

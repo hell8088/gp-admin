@@ -10,6 +10,7 @@ import javax.annotation.Resource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationContext;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,6 +18,7 @@ import com.alibaba.fastjson.JSON;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.gp.admin.base.domain.ResultData;
 import com.gp.admin.base.service.ResultBean;
+import com.gp.admin.biz.event.ResourceEvent;
 import com.gp.admin.biz.security.domain.SysResource;
 import com.gp.admin.biz.security.domain.SysRole;
 import com.gp.admin.biz.security.domain.SysUser;
@@ -44,6 +46,9 @@ public class SysSecurityApi {
 
 	@Resource
 	private SysRoleService roleService;
+	
+	@Resource
+	private ApplicationContext applicationContext;
 
 	/*--------------------------  resuource  --------------------------*/
 
@@ -108,6 +113,7 @@ public class SysSecurityApi {
 
 	@RequestMapping("/resource/delete")
 	public ResultData<Integer> DeleteResource(Long id) {
+		applicationContext.publishEvent(new ResourceEvent(this,"resourceUrl"));
 		return resourceService.resourceDelete(id);
 	}
 

@@ -5,6 +5,7 @@ import javax.annotation.Resource;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -46,18 +47,10 @@ public class SysSecurityController {
 
 	@Resource
 	private SysRoleService roleService;
-	
-	@Resource
-	private ShiroFilterFactoryBean shiroFilterFactoryBean;
 
 	@RequestMapping("/resource/list")
 	public ModelAndView resourceList() {
 		logger.info(RESOURCE_LIST);
-		shiroFilterFactoryBean.getFilterChainDefinitionMap().put("urldymic", "premissionDymic");
-		System.out.println("zzz : " + shiroFilterFactoryBean.getFilterChainDefinitionMap().get("urldymic"));
-		shiroFilterFactoryBean.getFilterChainDefinitionMap().remove("urldymic");
-		System.out.println("zzz : " + shiroFilterFactoryBean.getFilterChainDefinitionMap().get("urldymic"));
-		
 		ModelAndView mv = new ModelAndView(RESOURCE_LIST);
 		return mv;
 	}
