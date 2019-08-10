@@ -51,7 +51,11 @@ public class ResourceInterceptor implements HandlerInterceptor {
 		List<SysResource> sysResources = sysResourceService.getResources(roles);
 		String resCategray = getResource(uri);
 		for (SysResource resource : sysResources) {
-			if (resCategray.equals(resource.getUrl() == null ? "" : getResource(resource.getUrl()))) {
+			if (resource.getUrl() == null)
+				continue;
+			if (resource.getUrl().equals(""))
+				continue;
+			if (resCategray.equals(getResource(resource.getUrl()))) {
 				isAccess = true;
 				break;
 			}
@@ -59,7 +63,7 @@ public class ResourceInterceptor implements HandlerInterceptor {
 		if (isAccess)
 			return isAccess;
 		else {
-			httpServletResponse.sendRedirect("/login");
+			httpServletResponse.sendRedirect("/401error");
 			return false;
 		}
 	}

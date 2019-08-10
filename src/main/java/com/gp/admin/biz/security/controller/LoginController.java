@@ -40,6 +40,11 @@ public class LoginController {
 	public ModelAndView test() {
 		return new ModelAndView("pages/test/test");
 	}
+	
+	@RequestMapping(value = "/401error")
+	public ModelAndView _401Err() {
+		return new ModelAndView("/401.html");
+	}
 
 	
 	/**
