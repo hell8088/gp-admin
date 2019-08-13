@@ -59,6 +59,8 @@ public class SysUser extends Domain {
 	}
 
 	public Boolean getLocked() {
+		if (locked == null)
+			return false;
 		return locked;
 	}
 
@@ -66,5 +68,4 @@ public class SysUser extends Domain {
 		this.locked = locked;
 	}
 
-	
 }

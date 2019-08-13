@@ -1,11 +1,8 @@
 package com.gp.admin.biz.security.service;
 
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -93,7 +90,7 @@ public class CustomerRealm extends AuthorizingRealm {
 		List<SysResource> sysResources = sysResourceService.getResources(roles);
 		// 添加权限
 		for (SysResource sysResource : sysResources) {
-			authorizationInfo.addStringPermission(sysResource.getUrl());
+			authorizationInfo.addStringPermission(sysResource.getPermission());
 		}
 		return authorizationInfo;
 	}
@@ -113,7 +110,7 @@ public class CustomerRealm extends AuthorizingRealm {
 		if (!password.equals(user.getPassword())) {
 			throw new IncorrectCredentialsException("密码错误！");
 		}
-		if ("0".equals(user.getLocked())) {
+		if (!user.getLocked()) {
 			throw new LockedAccountException("账号已被锁定,请联系管理员！");
 		}
 		SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(user, user.getPassword(),
